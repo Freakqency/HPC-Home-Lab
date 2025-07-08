@@ -1,3 +1,5 @@
 .vimrc
 .vagrant
 .*swp
+scratch
+*.box

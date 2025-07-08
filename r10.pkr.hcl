@@ -16,7 +16,7 @@ source "vmware-iso" "r10" {
   iso_checksum     = "sha256:042be2dfd33e0a8cf4262c160d793660e16c3eee46b236120e86a40e867ddc96"
   ssh_username     = "vagrant"
   ssh_password     = "vagrant"
-  shutdown_command = "poweroff"
+	shutdown_command = "echo 'vagrant' | sudo -S shutdown -P now"
   http_directory   = "kickstart"
   boot_wait        = "5s"
   boot_command = [
@@ -24,7 +24,7 @@ source "vmware-iso" "r10" {
     "  inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg ip=dhcp",
     "<wait><f10><wait>"
   ]
-  headless             = false
+  headless             = true
   cpus                 = 2
   memory               = 2048
   disk_size            = 20480
