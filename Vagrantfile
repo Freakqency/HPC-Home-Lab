@@ -8,11 +8,9 @@ Vagrant.configure('2') do |config|
       node.vm.box = '/Users/surya/Projects/Vagrant-Boxes/r10-packer.box'
       node.vm.network 'private_network', ip: ip, auto_config: true
       node.vm.hostname = name
+      node.vm.synced_folder '/Users/surya/Projects/HPC-Ansible', '/HPC-Ansible'
+      node.vm.synced_folder '.', '/vagrant', disabled: true
       node.vm.provider 'vmware_fusion' do |vm|
-        vm.vmx['name'] = name
-        vm.vmx['memsize'] = '1048'
-        vm.vmx['numvcpus'] = '1'
-        vm.gui = false
         vm.vmx['name'] = name
         vm.vmx['memsize'] = '1048'
         vm.vmx['numvcpus'] = '1'
