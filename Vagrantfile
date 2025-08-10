@@ -5,10 +5,12 @@ nodes = { 'controller' => '192.168.41.135', 'compute1' => '192.168.41.136', 'com
 Vagrant.configure('2') do |config|
   nodes.each do |name, ip|
     config.vm.define name do |node|
-      node.vm.box = '/Users/surya/Projects/Vagrant-Boxes/r10-packer.box'
+      node.vm.box = '/Users/surya/Projects/Vagrant-Boxes/r10.box'
       node.vm.network 'private_network', ip: ip, auto_config: true
       node.vm.hostname = name
-      node.vm.synced_folder '/Users/surya/Projects/HPC-Ansible', '/HPC-Ansible'
+      if name == "controller"
+          node.vm.synced_folder '/Users/surya/Projects/HPC-Ansible', '/opt/HPC-Ansible'
+      end
       node.vm.synced_folder '.', '/vagrant', disabled: true
       node.vm.provider 'vmware_fusion' do |vm|
         vm.vmx['name'] = name
