@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-nodes = { 'controller' => '192.168.41.135', 'jenkins' => '192.168.41.136', 'compute1' => '192.168.41.137',
-          'compute2' => '192.168.41.138' }
+nodes = { 'controller' => '192.168.41.135', 'compute1' => '192.168.41.137', 'compute2' => '192.168.41.138' }
 
 Vagrant.configure('2') do |config|
   nodes.each do |name, ip|
