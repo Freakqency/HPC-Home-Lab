@@ -24,7 +24,7 @@ source "vmware-iso" "r10" {
     "  inst.ks=http://{{ .HTTPIP }}:{{ .HTTPPort }}/ks.cfg ip=dhcp",
     "<wait><f10><wait>"
   ]
-  headless             = false
+  headless             = true
   cpus                 = 2
   memory               = 2048
   disk_size            = 10240
