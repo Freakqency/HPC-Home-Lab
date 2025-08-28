@@ -1,8 +1,3 @@
-variable "disk_size" {
-  type    = number
-  default = 10240
-}
-
 packer {
   required_plugins {
     vmware = {
@@ -14,6 +9,16 @@ packer {
       source  = "github.com/hashicorp/vagrant"
     }
   }
+}
+
+variable "disk_size" {
+  type    = number
+  default = 10240
+}
+
+variable "name" {
+  type    = string
+  default = "r10"
 }
 
 source "vmware-iso" "r10" {
@@ -41,23 +46,12 @@ source "vmware-iso" "r10" {
   vmx_data = {
     architecture = "arm64"
   }
+  output_directory = "output-${var.name}"
 }
 
 build {
-  name = "r10"
   sources = ["source.vmware-iso.r10"]
   post-processor "vagrant" {
-    output = "/Users/surya/Projects/Vagrant-Boxes/r10-base.box"
-  }
-}
-
-build {
-  name = "r10-controller"
-  sources = ["source.vmware-iso.r10"]
-  variables = {
-    disk_size = 15360
-  }
-  post-processor "vagrant" {
-    output = "/Users/surya/Projects/Vagrant-Boxes/r10-controller.box"
+    output = "/Users/surya/Projects/Vagrant-Boxes/${var.name}.box"
   }
 }
