@@ -1,3 +1,8 @@
+variable "disk_size" {
+  type    = number
+  default = 10240
+}
+
 packer {
   required_plugins {
     vmware = {
@@ -27,7 +32,7 @@ source "vmware-iso" "r10" {
   headless             = true
   cpus                 = 2
   memory               = 2048
-  disk_size            = 10240
+  disk_size            = var.disk_size
   version              = "21"
   disk_adapter_type    = "nvme"
   network_adapter_type = "e1000e"
@@ -39,9 +44,20 @@ source "vmware-iso" "r10" {
 }
 
 build {
+  name = "r10"
   sources = ["source.vmware-iso.r10"]
   post-processor "vagrant" {
-    output = "/Users/surya/Projects/Vagrant-Boxes/r10.box"
+    output = "/Users/surya/Projects/Vagrant-Boxes/r10-base.box"
   }
 }
 
+build {
+  name = "r10-controller"
+  sources = ["source.vmware-iso.r10"]
+  variables = {
+    disk_size = 15360
+  }
+  post-processor "vagrant" {
+    output = "/Users/surya/Projects/Vagrant-Boxes/r10-controller.box"
+  }
+}
