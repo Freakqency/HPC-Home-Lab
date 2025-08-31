@@ -11,15 +11,6 @@ packer {
   }
 }
 
-variable "disk_size" {
-  type    = number
-  default = 10240
-}
-
-variable "name" {
-  type    = string
-  default = "r10"
-}
 
 source "vmware-iso" "r10" {
   iso_url          = "https://download.rockylinux.org/pub/rocky/10/isos/aarch64/Rocky-10.0-aarch64-minimal.iso"
@@ -35,9 +26,9 @@ source "vmware-iso" "r10" {
     "<wait><f10><wait>"
   ]
   headless             = true
-  cpus                 = 2
-  memory               = 2048
-  disk_size            = var.disk_size
+  cpus                 = 3
+  memory               = 4048
+  disk_size            = 10240
   version              = "21"
   disk_adapter_type    = "nvme"
   network_adapter_type = "e1000e"
@@ -46,12 +37,12 @@ source "vmware-iso" "r10" {
   vmx_data = {
     architecture = "arm64"
   }
-  output_directory = "output-${var.name}"
+  output_directory = "output-r10"
 }
 
 build {
   sources = ["source.vmware-iso.r10"]
   post-processor "vagrant" {
-    output = "/Users/surya/Projects/Vagrant-Boxes/${var.name}.box"
+    output = "/Users/surya/Projects/Vagrant-Boxes/r10.box"
   }
 }
